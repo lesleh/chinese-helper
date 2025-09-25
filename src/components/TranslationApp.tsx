@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface Translation {
-  english: string;
+  chinese: string;
   context: string;
   usage: string;
 }
@@ -23,7 +23,7 @@ export function TranslationApp() {
 
   const handleTranslate = async () => {
     if (!inputText.trim()) {
-      setError("Please enter some Chinese text to translate");
+      setError("Please enter some English text to translate");
       return;
     }
 
@@ -66,26 +66,26 @@ export function TranslationApp() {
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-            Chinese Translation Helper
+            English to Chinese Translator
           </h1>
           <p className="text-gray-600 text-center mb-8">
-            Enter Chinese text to get English translations with pinyin and
+            Enter English text to get Chinese translations with pinyin and
             pronunciation guide
           </p>
 
           <div className="mb-6">
             <label
-              htmlFor="chineseInput"
+              htmlFor="englishInput"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Chinese Text
+              English Text
             </label>
             <textarea
-              id="chineseInput"
+              id="englishInput"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Enter Chinese text here... (Press Enter to translate)"
+              placeholder="Enter English text here... (Press Enter to translate)"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-lg"
               rows={3}
             />
@@ -147,7 +147,7 @@ export function TranslationApp() {
               {/* Translations */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  English Translations
+                  Chinese Translations
                 </h3>
                 <div className="space-y-4">
                   {result.translations.map((translation, index) => (
@@ -156,7 +156,7 @@ export function TranslationApp() {
                       className="bg-gray-50 rounded-lg p-4 border-l-4 border-green-500"
                     >
                       <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                        {translation.english}
+                        {translation.chinese}
                       </h4>
                       <div className="space-y-1">
                         <p className="text-sm text-gray-600">

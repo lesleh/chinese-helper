@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 interface TranslationResult {
   translations: Array<{
-    english: string;
+    chinese: string;
     context: string;
     usage: string;
   }>;
@@ -34,18 +34,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const prompt = `You are a Chinese language expert. Translate the following Chinese text to English and provide comprehensive information.
+    const prompt = `You are a Chinese language expert. Translate the following English text to Chinese and provide comprehensive information.
 
-Chinese text: "${text}"
+English text: "${text}"
 
 Please respond with a JSON object that includes:
-1. "translations" - An array of possible English translations with context and usage information
-2. "pinyin" - The pinyin romanization of the Chinese text
+1. "translations" - An array of possible Chinese translations with context and usage information
+2. "pinyin" - The pinyin romanization of the Chinese translations (combine all if multiple)
 3. "pronunciation" - A simple English pronunciation guide (how an English speaker might pronounce the pinyin)
-4. "originalText" - The original Chinese text
+4. "originalText" - The original English text
 
 For each translation, include:
-- "english": The English translation
+- "chinese": The Chinese translation (simplified characters)
 - "context": The grammatical or contextual information
 - "usage": When this translation would be used (formal/informal, specific situations, etc.)
 
@@ -55,19 +55,19 @@ Format your response as valid JSON only, no additional text or formatting.
 
 Example response format:
 {
-  "originalText": "你好",
+  "originalText": "Hello",
   "pinyin": "nǐ hǎo",
   "pronunciation": "nee how",
   "translations": [
     {
-      "english": "Hello",
+      "chinese": "你好",
       "context": "Common greeting",
       "usage": "Used in most casual and formal situations when meeting someone"
     },
     {
-      "english": "Hi",
-      "context": "Informal greeting",
-      "usage": "More casual, used among friends or in informal settings"
+      "chinese": "您好",
+      "context": "Polite/formal greeting",
+      "usage": "More formal, used when addressing elders, strangers, or in professional settings"
     }
   ]
 }`;
@@ -78,7 +78,7 @@ Example response format:
         {
           role: "system",
           content:
-            "You are a helpful Chinese language expert. Always respond with valid JSON only.",
+            "You are a helpful Chinese language expert. Always respond with valid JSON only. When translating to Chinese, use simplified characters.",
         },
         {
           role: "user",

@@ -1,8 +1,8 @@
-# Chinese Translation Helper
+# English to Chinese Translator
 
-A Next.js application that translates Chinese text to English using the OpenAI API. Features include:
+A Next.js application that translates English text to Chinese using the OpenAI API. Features include:
 
-- **Multiple translations**: Shows all possible English translations with context
+- **Multiple translations**: Shows all possible Chinese translations with context
 - **Pinyin romanization**: Provides pinyin for pronunciation reference  
 - **Pronunciation guide**: Simple English pronunciation guide for non-Chinese speakers
 - **Context and usage**: Explains when each translation would be used (formal/informal, specific situations)
@@ -12,7 +12,7 @@ A Next.js application that translates Chinese text to English using the OpenAI A
 - Clean, responsive UI built with Tailwind CSS
 - Real-time translation using OpenAI's GPT-4
 - Comprehensive language analysis including:
-  - Multiple possible English translations
+  - Multiple possible Chinese translations
   - Pinyin romanization
   - English pronunciation guide
   - Context and usage information for each translation
@@ -46,23 +46,24 @@ A Next.js application that translates Chinese text to English using the OpenAI A
 
 ## Usage
 
-1. Enter any Chinese text in the input field
+1. Enter any English text in the input field
 2. Press Enter or click "Translate" 
 3. View the comprehensive translation results including:
-   - Original Chinese text
+   - Original English text
+   - Chinese translations (simplified characters)
    - Pinyin romanization
    - English pronunciation guide
-   - All possible English translations with context
+   - Context and usage information for each translation
 
 ## Example
 
-**Input:** 你好
+**Input:** Hello
 **Output:**
-- **Pinyin:** nǐ hǎo  
-- **Pronunciation:** "nee how"
-- **Translations:**
-  - **Hello** - Common greeting, used in most casual and formal situations
-  - **Hi** - Informal greeting, used among friends or in informal settings
+- **Chinese Translations:**
+  - **你好** - Common greeting, used in most casual and formal situations
+  - **您好** - Polite/formal greeting, used when addressing elders or in professional settings
+- **Pinyin:** nǐ hǎo / nín hǎo
+- **Pronunciation:** "nee how / neen how"
 
 ## Technology Stack
 
@@ -77,19 +78,19 @@ The app includes a `/api/translate` endpoint that accepts POST requests:
 
 ```typescript
 {
-  "text": "你好世界"
+  "text": "Hello world"
 }
 ```
 
 Response format:
 ```typescript
 {
-  "originalText": "你好世界",
+  "originalText": "Hello world",
   "pinyin": "nǐ hǎo shì jiè", 
   "pronunciation": "nee how shir jee-eh",
   "translations": [
     {
-      "english": "Hello world",
+      "chinese": "你好世界",
       "context": "Common greeting phrase",
       "usage": "Used as a standard greeting, often in programming contexts"
     }
