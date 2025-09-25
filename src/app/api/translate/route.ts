@@ -13,6 +13,13 @@ interface TranslationResult {
     context: string;
     usage: string;
   }>;
+  breakdown: Array<{
+    english: string;
+    chinese: string;
+    pinyin: string;
+    partOfSpeech: string;
+    role: string;
+  }>;
   originalText: string;
 }
 
@@ -40,7 +47,8 @@ English text: "${text}"
 
 Please respond with a JSON object that includes:
 1. "translations" - An array of possible Chinese translations, each with its own pinyin, pronunciation, context and usage information
-2. "originalText" - The original English text
+2. "breakdown" - A word-by-word or phrase-by-phrase breakdown of the English sentence showing how each part translates
+3. "originalText" - The original English text
 
 For each translation, include:
 - "chinese": The Chinese translation (simplified characters)
@@ -49,27 +57,50 @@ For each translation, include:
 - "context": The grammatical or contextual information
 - "usage": When this translation would be used (formal/informal, specific situations, etc.)
 
+For the breakdown, analyze the English sentence and show how each word/phrase translates:
+- "english": The English word or phrase
+- "chinese": How this part translates to Chinese
+- "pinyin": The pinyin for this part
+- "partOfSpeech": The grammatical role (noun, verb, adjective, etc.)
+- "role": How this part functions in the sentence structure
+
 If there are multiple possible meanings or translations, include all of them.
 
 Format your response as valid JSON only, no additional text or formatting.
 
 Example response format:
 {
-  "originalText": "Hello",
-  "translations": [
+  "originalText": "Hello world",
+  "breakdown": [
     {
+      "english": "Hello",
       "chinese": "你好",
       "pinyin": "nǐ hǎo",
-      "pronunciation": "nee how",
-      "context": "Common greeting",
-      "usage": "Used in most casual and formal situations when meeting someone"
+      "partOfSpeech": "interjection",
+      "role": "greeting"
     },
     {
-      "chinese": "您好",
-      "pinyin": "nín hǎo", 
-      "pronunciation": "neen how",
-      "context": "Polite/formal greeting",
-      "usage": "More formal, used when addressing elders, strangers, or in professional settings"
+      "english": "world",
+      "chinese": "世界",
+      "pinyin": "shì jiè",
+      "partOfSpeech": "noun",
+      "role": "object being greeted"
+    }
+  ],
+  "translations": [
+    {
+      "chinese": "你好世界",
+      "pinyin": "nǐ hǎo shì jiè",
+      "pronunciation": "nee how shir jee-eh",
+      "context": "Common greeting phrase",
+      "usage": "Used as a standard greeting, often in programming contexts"
+    },
+    {
+      "chinese": "世界你好",
+      "pinyin": "shì jiè nǐ hǎo",
+      "pronunciation": "shir jee-eh nee how",
+      "context": "Alternative word order",
+      "usage": "Less common, more emphatic greeting to the world"
     }
   ]
 }`;
