@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { InteractiveChineseText } from "./InteractiveChineseText";
+import { CopyButton } from "./CopyButton";
 
 interface BreakdownItem {
   chinese: string;
@@ -148,13 +149,18 @@ export function TranslationApp() {
                     >
                       {/* Interactive Chinese Text with Tooltips */}
                       <div className="mb-6">
-                        <div className="mb-2">
+                        <div className="mb-2 flex items-center justify-between">
                           <h4 className="text-sm font-medium text-gray-700 mb-3">
                             Chinese Translation{" "}
                             <span className="text-xs text-gray-500 font-normal">
                               (hover or tap characters for details)
                             </span>
                           </h4>
+                          <CopyButton
+                            text={translation.chinese}
+                            label="Copy Chinese"
+                            className="mb-3"
+                          />
                         </div>
                         <InteractiveChineseText
                           chineseText={translation.chinese}
