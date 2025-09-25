@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { InteractiveChineseText } from "./InteractiveChineseText";
 
 interface BreakdownItem {
   chinese: string;
@@ -145,18 +146,28 @@ export function TranslationApp() {
                       key={index}
                       className="bg-gray-50 rounded-lg p-6 border-l-4 border-green-500"
                     >
-                      {/* Chinese Text */}
-                      <div className="mb-4">
-                        <h4 className="text-2xl font-bold text-gray-900 mb-2">
-                          {translation.chinese}
-                        </h4>
+                      {/* Interactive Chinese Text with Tooltips */}
+                      <div className="mb-6">
+                        <div className="mb-2">
+                          <h4 className="text-sm font-medium text-gray-700 mb-3">
+                            Chinese Translation{" "}
+                            <span className="text-xs text-gray-500 font-normal">
+                              (hover or tap characters for details)
+                            </span>
+                          </h4>
+                        </div>
+                        <InteractiveChineseText
+                          chineseText={translation.chinese}
+                          breakdown={translation.breakdown}
+                          className="text-3xl text-gray-900 mb-3"
+                        />
                       </div>
 
-                      {/* Pinyin and Pronunciation */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      {/* Overall Pinyin and Pronunciation */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 border-t pt-4">
                         <div>
                           <p className="text-sm font-medium text-gray-700 mb-1">
-                            Pinyin
+                            Complete Pinyin
                           </p>
                           <p className="text-lg text-blue-600 font-medium">
                             {translation.pinyin}
@@ -164,67 +175,11 @@ export function TranslationApp() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-gray-700 mb-1">
-                            Pronunciation
+                            Complete Pronunciation
                           </p>
                           <p className="text-lg text-gray-700 italic">
                             &ldquo;{translation.pronunciation}&rdquo;
                           </p>
-                        </div>
-                      </div>
-
-                      {/* Character/Word Breakdown */}
-                      <div className="mb-4 border-t pt-4">
-                        <h5 className="text-sm font-semibold text-gray-800 mb-3">
-                          Character Breakdown
-                        </h5>
-                        <div className="space-y-2">
-                          {translation.breakdown.map((item, breakdownIndex) => (
-                            <div
-                              key={breakdownIndex}
-                              className="bg-blue-50 rounded-lg p-3 border-l-2 border-blue-400"
-                            >
-                              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
-                                <div>
-                                  <p className="font-medium text-gray-700 mb-1">
-                                    Character
-                                  </p>
-                                  <p className="text-lg font-bold text-gray-900">
-                                    {item.chinese}
-                                  </p>
-                                </div>
-                                <div>
-                                  <p className="font-medium text-gray-700 mb-1">
-                                    Pinyin
-                                  </p>
-                                  <p className="text-blue-600 font-medium">
-                                    {item.pinyin}
-                                  </p>
-                                  <p className="text-xs text-gray-500 italic">
-                                    &ldquo;{item.pronunciation}&rdquo;
-                                  </p>
-                                </div>
-                                <div>
-                                  <p className="font-medium text-gray-700 mb-1">
-                                    Meaning
-                                  </p>
-                                  <p className="text-gray-900">
-                                    {item.meaning}
-                                  </p>
-                                </div>
-                                <div>
-                                  <p className="font-medium text-gray-700 mb-1">
-                                    Grammar
-                                  </p>
-                                  <p className="text-gray-600 capitalize">
-                                    {item.partOfSpeech}
-                                  </p>
-                                  <p className="text-xs text-gray-500 mt-1">
-                                    {item.role}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
                         </div>
                       </div>
 
