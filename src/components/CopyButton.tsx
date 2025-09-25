@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface CopyButtonProps {
   text: string;
@@ -8,7 +8,11 @@ interface CopyButtonProps {
   label?: string;
 }
 
-export function CopyButton({ text, className = "", label = "Copy" }: CopyButtonProps) {
+export function CopyButton({
+  text,
+  className = "",
+  label = "Copy",
+}: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
 
@@ -17,15 +21,15 @@ export function CopyButton({ text, className = "", label = "Copy" }: CopyButtonP
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setError(false);
-      
+
       // Reset the copied state after 2 seconds
       setTimeout(() => {
         setCopied(false);
       }, 2000);
     } catch (err) {
-      console.error('Failed to copy text:', err);
+      console.error("Failed to copy text:", err);
       setError(true);
-      
+
       // Reset error state after 2 seconds
       setTimeout(() => {
         setError(false);
@@ -38,10 +42,10 @@ export function CopyButton({ text, className = "", label = "Copy" }: CopyButtonP
       onClick={handleCopy}
       className={`inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
         copied
-          ? 'bg-green-100 text-green-700 border border-green-300 focus:ring-green-500'
+          ? "bg-green-100 text-green-700 border border-green-300 focus:ring-green-500"
           : error
-          ? 'bg-red-100 text-red-700 border border-red-300 focus:ring-red-500'
-          : 'bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200 focus:ring-gray-500'
+          ? "bg-red-100 text-red-700 border border-red-300 focus:ring-red-500"
+          : "bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200 focus:ring-gray-500"
       } ${className}`}
       title={`${label}: ${text}`}
     >
@@ -79,11 +83,9 @@ export function CopyButton({ text, className = "", label = "Copy" }: CopyButtonP
           />
         )}
       </svg>
-      
+
       {/* Text */}
-      <span>
-        {copied ? 'Copied!' : error ? 'Failed' : label}
-      </span>
+      <span>{copied ? "Copied!" : error ? "Failed" : label}</span>
     </button>
   );
 }
