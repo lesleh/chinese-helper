@@ -2,25 +2,26 @@
 
 import { useState } from "react";
 
+interface BreakdownItem {
+  chinese: string;
+  pinyin: string;
+  pronunciation: string;
+  meaning: string;
+  partOfSpeech: string;
+  role: string;
+}
+
 interface Translation {
   chinese: string;
   pinyin: string;
   pronunciation: string;
   context: string;
   usage: string;
-}
-
-interface BreakdownItem {
-  english: string;
-  chinese: string;
-  pinyin: string;
-  partOfSpeech: string;
-  role: string;
+  breakdown: BreakdownItem[];
 }
 
 interface TranslationResult {
   translations: Translation[];
-  breakdown: BreakdownItem[];
   originalText: string;
 }
 
@@ -133,53 +134,7 @@ export function TranslationApp() {
                 </p>
               </div>
 
-              {/* Sentence Breakdown */}
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  Sentence Breakdown
-                </h3>
-                <div className="space-y-3">
-                  {result.breakdown.map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500"
-                    >
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                          <p className="text-sm font-medium text-gray-700 mb-1">
-                            English
-                          </p>
-                          <p className="text-lg font-semibold text-gray-900">
-                            {item.english}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-700 mb-1">
-                            Chinese
-                          </p>
-                          <p className="text-lg font-semibold text-gray-900">
-                            {item.chinese}
-                          </p>
-                          <p className="text-sm text-blue-600">{item.pinyin}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-700 mb-1">
-                            Grammar
-                          </p>
-                          <p className="text-sm text-gray-600 capitalize">
-                            {item.partOfSpeech}
-                          </p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {item.role}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Translations - Each grouped with its own pinyin, pronunciation, etc. */}
+              {/* Translations - Each with its own breakdown */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
                   Chinese Translations
@@ -214,6 +169,62 @@ export function TranslationApp() {
                           <p className="text-lg text-gray-700 italic">
                             &ldquo;{translation.pronunciation}&rdquo;
                           </p>
+                        </div>
+                      </div>
+
+                      {/* Character/Word Breakdown */}
+                      <div className="mb-4 border-t pt-4">
+                        <h5 className="text-sm font-semibold text-gray-800 mb-3">
+                          Character Breakdown
+                        </h5>
+                        <div className="space-y-2">
+                          {translation.breakdown.map((item, breakdownIndex) => (
+                            <div
+                              key={breakdownIndex}
+                              className="bg-blue-50 rounded-lg p-3 border-l-2 border-blue-400"
+                            >
+                              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
+                                <div>
+                                  <p className="font-medium text-gray-700 mb-1">
+                                    Character
+                                  </p>
+                                  <p className="text-lg font-bold text-gray-900">
+                                    {item.chinese}
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-700 mb-1">
+                                    Pinyin
+                                  </p>
+                                  <p className="text-blue-600 font-medium">
+                                    {item.pinyin}
+                                  </p>
+                                  <p className="text-xs text-gray-500 italic">
+                                    &ldquo;{item.pronunciation}&rdquo;
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-700 mb-1">
+                                    Meaning
+                                  </p>
+                                  <p className="text-gray-900">
+                                    {item.meaning}
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-700 mb-1">
+                                    Grammar
+                                  </p>
+                                  <p className="text-gray-600 capitalize">
+                                    {item.partOfSpeech}
+                                  </p>
+                                  <p className="text-xs text-gray-500 mt-1">
+                                    {item.role}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
 

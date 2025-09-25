@@ -12,13 +12,14 @@ interface TranslationResult {
     pronunciation: string;
     context: string;
     usage: string;
-  }>;
-  breakdown: Array<{
-    english: string;
-    chinese: string;
-    pinyin: string;
-    partOfSpeech: string;
-    role: string;
+    breakdown: Array<{
+      chinese: string;
+      pinyin: string;
+      pronunciation: string;
+      meaning: string;
+      partOfSpeech: string;
+      role: string;
+    }>;
   }>;
   originalText: string;
 }
@@ -46,9 +47,8 @@ export async function POST(request: NextRequest) {
 English text: "${text}"
 
 Please respond with a JSON object that includes:
-1. "translations" - An array of possible Chinese translations, each with its own pinyin, pronunciation, context and usage information
-2. "breakdown" - A word-by-word or phrase-by-phrase breakdown of the English sentence showing how each part translates
-3. "originalText" - The original English text
+1. "translations" - An array of possible Chinese translations, each with its own pinyin, pronunciation, context, usage, and character/word breakdown
+2. "originalText" - The original English text
 
 For each translation, include:
 - "chinese": The Chinese translation (simplified characters)
@@ -56,13 +56,15 @@ For each translation, include:
 - "pronunciation": A simple English pronunciation guide for this specific translation
 - "context": The grammatical or contextual information
 - "usage": When this translation would be used (formal/informal, specific situations, etc.)
+- "breakdown": Character-by-character or word-by-word breakdown of this Chinese translation
 
-For the breakdown, analyze the English sentence and show how each word/phrase translates:
-- "english": The English word or phrase
-- "chinese": How this part translates to Chinese
-- "pinyin": The pinyin for this part
-- "partOfSpeech": The grammatical role (noun, verb, adjective, etc.)
-- "role": How this part functions in the sentence structure
+For each item in the breakdown array:
+- "chinese": The Chinese character or word
+- "pinyin": The pinyin for this character/word
+- "pronunciation": Simple English pronunciation for this part
+- "meaning": The English meaning of this character/word
+- "partOfSpeech": The grammatical role (noun, verb, adjective, particle, etc.)
+- "role": How this character/word functions in this sentence
 
 If there are multiple possible meanings or translations, include all of them.
 
@@ -71,36 +73,39 @@ Format your response as valid JSON only, no additional text or formatting.
 Example response format:
 {
   "originalText": "Hello world",
-  "breakdown": [
-    {
-      "english": "Hello",
-      "chinese": "你好",
-      "pinyin": "nǐ hǎo",
-      "partOfSpeech": "interjection",
-      "role": "greeting"
-    },
-    {
-      "english": "world",
-      "chinese": "世界",
-      "pinyin": "shì jiè",
-      "partOfSpeech": "noun",
-      "role": "object being greeted"
-    }
-  ],
   "translations": [
     {
       "chinese": "你好世界",
       "pinyin": "nǐ hǎo shì jiè",
       "pronunciation": "nee how shir jee-eh",
       "context": "Common greeting phrase",
-      "usage": "Used as a standard greeting, often in programming contexts"
-    },
-    {
-      "chinese": "世界你好",
-      "pinyin": "shì jiè nǐ hǎo",
-      "pronunciation": "shir jee-eh nee how",
-      "context": "Alternative word order",
-      "usage": "Less common, more emphatic greeting to the world"
+      "usage": "Used as a standard greeting, often in programming contexts",
+      "breakdown": [
+        {
+          "chinese": "你",
+          "pinyin": "nǐ",
+          "pronunciation": "nee",
+          "meaning": "you",
+          "partOfSpeech": "pronoun",
+          "role": "subject/addressee"
+        },
+        {
+          "chinese": "好",
+          "pinyin": "hǎo",
+          "pronunciation": "how",
+          "meaning": "good/well",
+          "partOfSpeech": "adjective",
+          "role": "greeting particle"
+        },
+        {
+          "chinese": "世界",
+          "pinyin": "shì jiè",
+          "pronunciation": "shir jee-eh",
+          "meaning": "world",
+          "partOfSpeech": "noun",
+          "role": "object being greeted"
+        }
+      ]
     }
   ]
 }`;
