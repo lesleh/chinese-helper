@@ -4,14 +4,14 @@ import { useState } from "react";
 
 interface Translation {
   chinese: string;
+  pinyin: string;
+  pronunciation: string;
   context: string;
   usage: string;
 }
 
 interface TranslationResult {
   translations: Translation[];
-  pinyin: string;
-  pronunciation: string;
   originalText: string;
 }
 
@@ -110,7 +110,7 @@ export function TranslationApp() {
         {result && (
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Translation Result
+              Translation Results
             </h2>
 
             <div className="space-y-6">
@@ -124,49 +124,62 @@ export function TranslationApp() {
                 </p>
               </div>
 
-              {/* Pinyin */}
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  Pinyin
-                </h3>
-                <p className="text-xl text-blue-600 font-medium">
-                  {result.pinyin}
-                </p>
-              </div>
-
-              {/* Pronunciation */}
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  Pronunciation Guide
-                </h3>
-                <p className="text-lg text-gray-700 italic">
-                  &ldquo;{result.pronunciation}&rdquo;
-                </p>
-              </div>
-
-              {/* Translations */}
+              {/* Translations - Each grouped with its own pinyin, pronunciation, etc. */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
                   Chinese Translations
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {result.translations.map((translation, index) => (
                     <div
                       key={index}
-                      className="bg-gray-50 rounded-lg p-4 border-l-4 border-green-500"
+                      className="bg-gray-50 rounded-lg p-6 border-l-4 border-green-500"
                     >
-                      <h4 className="text-xl font-semibold text-gray-900 mb-2">
-                        {translation.chinese}
-                      </h4>
-                      <div className="space-y-1">
-                        <p className="text-sm text-gray-600">
-                          <span className="font-medium">Context:</span>{" "}
-                          {translation.context}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          <span className="font-medium">Usage:</span>{" "}
-                          {translation.usage}
-                        </p>
+                      {/* Chinese Text */}
+                      <div className="mb-4">
+                        <h4 className="text-2xl font-bold text-gray-900 mb-2">
+                          {translation.chinese}
+                        </h4>
+                      </div>
+
+                      {/* Pinyin and Pronunciation */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <p className="text-sm font-medium text-gray-700 mb-1">
+                            Pinyin
+                          </p>
+                          <p className="text-lg text-blue-600 font-medium">
+                            {translation.pinyin}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-700 mb-1">
+                            Pronunciation
+                          </p>
+                          <p className="text-lg text-gray-700 italic">
+                            &ldquo;{translation.pronunciation}&rdquo;
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Context and Usage */}
+                      <div className="space-y-2 border-t pt-4">
+                        <div>
+                          <span className="text-sm font-medium text-gray-700">
+                            Context:{" "}
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            {translation.context}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-sm font-medium text-gray-700">
+                            Usage:{" "}
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            {translation.usage}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   ))}

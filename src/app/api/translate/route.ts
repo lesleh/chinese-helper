@@ -8,11 +8,11 @@ const openai = new OpenAI({
 interface TranslationResult {
   translations: Array<{
     chinese: string;
+    pinyin: string;
+    pronunciation: string;
     context: string;
     usage: string;
   }>;
-  pinyin: string;
-  pronunciation: string;
   originalText: string;
 }
 
@@ -39,13 +39,13 @@ export async function POST(request: NextRequest) {
 English text: "${text}"
 
 Please respond with a JSON object that includes:
-1. "translations" - An array of possible Chinese translations with context and usage information
-2. "pinyin" - The pinyin romanization of the Chinese translations (combine all if multiple)
-3. "pronunciation" - A simple English pronunciation guide (how an English speaker might pronounce the pinyin)
-4. "originalText" - The original English text
+1. "translations" - An array of possible Chinese translations, each with its own pinyin, pronunciation, context and usage information
+2. "originalText" - The original English text
 
 For each translation, include:
 - "chinese": The Chinese translation (simplified characters)
+- "pinyin": The pinyin romanization of this specific Chinese translation
+- "pronunciation": A simple English pronunciation guide for this specific translation
 - "context": The grammatical or contextual information
 - "usage": When this translation would be used (formal/informal, specific situations, etc.)
 
@@ -56,16 +56,18 @@ Format your response as valid JSON only, no additional text or formatting.
 Example response format:
 {
   "originalText": "Hello",
-  "pinyin": "nǐ hǎo",
-  "pronunciation": "nee how",
   "translations": [
     {
       "chinese": "你好",
+      "pinyin": "nǐ hǎo",
+      "pronunciation": "nee how",
       "context": "Common greeting",
       "usage": "Used in most casual and formal situations when meeting someone"
     },
     {
       "chinese": "您好",
+      "pinyin": "nín hǎo", 
+      "pronunciation": "neen how",
       "context": "Polite/formal greeting",
       "usage": "More formal, used when addressing elders, strangers, or in professional settings"
     }
