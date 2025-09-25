@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { CharacterTooltip } from './CharacterTooltip';
+import { CharacterTooltip } from "./CharacterTooltip";
 
 interface BreakdownItem {
   chinese: string;
@@ -17,14 +17,14 @@ interface InteractiveChineseTextProps {
   className?: string;
 }
 
-export function InteractiveChineseText({ 
-  chineseText, 
-  breakdown, 
-  className = "" 
+export function InteractiveChineseText({
+  chineseText,
+  breakdown,
+  className = "",
 }: InteractiveChineseTextProps) {
   // Create a map of characters to their breakdown info
   const characterMap = new Map<string, BreakdownItem>();
-  breakdown.forEach(item => {
+  breakdown.forEach((item) => {
     // Handle both single characters and multi-character words
     characterMap.set(item.chinese, item);
   });
@@ -36,14 +36,14 @@ export function InteractiveChineseText({
   const renderCharacters = () => {
     const elements: React.ReactElement[] = [];
     let i = 0;
-    
+
     while (i < characters.length) {
       let matchedInfo: BreakdownItem | null = null;
       let matchLength = 1;
-      
+
       // Try to find the longest matching word starting at this position
       for (let len = 4; len >= 1; len--) {
-        const substr = characters.slice(i, i + len).join('');
+        const substr = characters.slice(i, i + len).join("");
         const info = characterMap.get(substr);
         if (info) {
           matchedInfo = info;
@@ -51,27 +51,27 @@ export function InteractiveChineseText({
           break;
         }
       }
-      
-      const text = characters.slice(i, i + matchLength).join('');
-      
+
+      const text = characters.slice(i, i + matchLength).join("");
+
       if (matchedInfo) {
         elements.push(
           <CharacterTooltip key={i} info={matchedInfo}>
             {text}
-          </CharacterTooltip>
+          </CharacterTooltip>,
         );
       } else {
         // Fallback for characters without breakdown info
         elements.push(
           <span key={i} className="cursor-default">
             {text}
-          </span>
+          </span>,
         );
       }
-      
+
       i += matchLength;
     }
-    
+
     return elements;
   };
 

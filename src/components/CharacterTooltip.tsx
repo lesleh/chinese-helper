@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   useFloating,
@@ -12,8 +12,8 @@ import {
   useRole,
   useInteractions,
   FloatingPortal,
-} from '@floating-ui/react';
-import { useState } from 'react';
+} from "@floating-ui/react";
+import { useState } from "react";
 
 interface CharacterInfo {
   chinese: string;
@@ -38,7 +38,7 @@ export function CharacterTooltip({ info, children }: CharacterTooltipProps) {
     middleware: [
       offset(5),
       flip({
-        fallbackAxisSideDirection: 'start',
+        fallbackAxisSideDirection: "start",
       }),
       shift(),
     ],
@@ -51,7 +51,7 @@ export function CharacterTooltip({ info, children }: CharacterTooltipProps) {
   });
   const focus = useFocus(context);
   const dismiss = useDismiss(context);
-  const role = useRole(context, { role: 'tooltip' });
+  const role = useRole(context, { role: "tooltip" });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     hover,
@@ -96,13 +96,13 @@ export function CharacterTooltip({ info, children }: CharacterTooltipProps) {
               <div className="border-t pt-3 space-y-2">
                 <div>
                   <span className="text-sm font-semibold text-gray-700">
-                    Meaning:{' '}
+                    Meaning:{" "}
                   </span>
                   <span className="text-sm text-gray-900">{info.meaning}</span>
                 </div>
                 <div>
                   <span className="text-sm font-semibold text-gray-700">
-                    Part of Speech:{' '}
+                    Part of Speech:{" "}
                   </span>
                   <span className="text-sm text-gray-600 capitalize">
                     {info.partOfSpeech}
@@ -110,7 +110,7 @@ export function CharacterTooltip({ info, children }: CharacterTooltipProps) {
                 </div>
                 <div>
                   <span className="text-sm font-semibold text-gray-700">
-                    Role:{' '}
+                    Role:{" "}
                   </span>
                   <span className="text-sm text-gray-600">{info.role}</span>
                 </div>
@@ -118,13 +118,14 @@ export function CharacterTooltip({ info, children }: CharacterTooltipProps) {
             </div>
 
             {/* Tooltip arrow */}
-            <div className="absolute w-2 h-2 bg-white border-l border-t border-gray-200 rotate-45 -translate-x-1 -translate-y-1" 
-                 style={{ 
-                   left: '50%', 
-                   bottom: '-4px',
-                   borderRight: 'none',
-                   borderBottom: 'none'
-                 }} 
+            <div
+              className="absolute w-2 h-2 bg-white border-l border-t border-gray-200 rotate-45 -translate-x-1 -translate-y-1"
+              style={{
+                left: "50%",
+                bottom: "-4px",
+                borderRight: "none",
+                borderBottom: "none",
+              }}
             />
           </div>
         </FloatingPortal>
